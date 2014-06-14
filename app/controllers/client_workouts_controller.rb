@@ -61,6 +61,10 @@ class ClientWorkoutsController < ApplicationController
     end
   end
 
+  def find
+    @client_workouts = ClientWorkout.where("client_name = ? OR trainer = ?", params[:search_string], params[:search_string])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_client_workout
@@ -71,9 +75,4 @@ class ClientWorkoutsController < ApplicationController
     def client_workout_params
       params.require(:client_workout).permit(:client_name, :trainer, :duration_mins, :date_of_workout, :paid_amount)
     end
-
-  def find
-    @client_workouts = ClientWorkout.find(:all, :conditions=>["client_name = ? OR trainer = ?", params[:search_string], params[:search_string]])
-  end
-
 end
